@@ -15,7 +15,7 @@ import { NewsItem } from '../models/news-item.model';
   styleUrl: './news-detail.component.scss',
 })
 export class NewsDetailComponent implements OnInit {
-  public news: NewsItem[] = [];
+  public news: NewsItem | undefined;
 
   constructor(private router: Router) {}
 
