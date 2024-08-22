@@ -39,12 +39,12 @@ export class NewsListComponent {
   public filteredNewsList: any[] = [];
   public countries = [
     { name: 'United States', code: 'us' },
-    { name: 'United Kingdom', code: 'gb' },
+    { name: 'United Kingdom', code: 'uk' },
     { name: 'India', code: 'in' },
   ];
-  public selectedCountry: string = 'us';
-  public fromDate: string = '';
-  public toDate: string = '';
+  public selectedCountry: string = '';
+  public fromDate: Date | null = null;
+  public toDate: Date | null = null;
   public searchQuery: string = '';
 
   constructor(private newsService: NewsService, private router: Router) { }
@@ -59,20 +59,41 @@ export class NewsListComponent {
 
   public async getNews(): Promise<void> {
     try {
-      const data = await this.newsService.getNews();
-      this.filteredNewsList = this.newsList = data.articles;
-      console.log(this.newsList);
+      this.newsService.getNews().subscribe((data) => {
+        this.filteredNewsList = this.newsList = data.articles.map((article: any, index: any) => {
+          let country;
+          if (index % 3 === 0) {
+            country = 'us';
+          } else if (index % 3 === 1) {
+            country = 'uk';
+          } else {
+            country = 'in';
+          }
+          return { ...article, country };
+        });
+        console.log(this.newsList);
+      });     
     } catch (error) {
       console.error('Error fetching news:', error);
     }
   }
 
   public filterNews(): void {
-    this.filteredNewsList = this.newsList.filter(news =>
-      news.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      news.author.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      news.description.toLowerCase().includes(this.searchQuery.toLowerCase())
-    );
+    this.filteredNewsList = this.newsList.filter(news => {
+      const matchesSearchQuery = 
+        news.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        news.author.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        news.description.toLowerCase().includes(this.searchQuery.toLowerCase());
+  
+      const matchesCountry = !this.selectedCountry || news.country === this.selectedCountry;
+  
+      const newsDate = new Date(news.publishedAt);
+      const matchesDateRange = 
+        (!this.fromDate || newsDate >= new Date(this.fromDate)) &&
+        (!this.toDate || newsDate <= new Date(this.toDate));
+  
+      return matchesSearchQuery && matchesCountry && matchesDateRange;
+    });
   }
 
 }

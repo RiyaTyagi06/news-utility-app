@@ -11,11 +11,10 @@ export class NewsService {
 
   constructor(private http: HttpClient) { }
 
-  public async getNews(): Promise<any> {
+  public getNews(): Observable<any> {
     const url = `${this.apiUrl}?sources=techcrunch&apiKey=${this.apiKey}`;
     try {
-      const data = await this.http.get(url).toPromise();
-      return data;
+      return this.http.get(url);
     } catch (error) {
       console.error('Error fetching news:', error);
       throw error;

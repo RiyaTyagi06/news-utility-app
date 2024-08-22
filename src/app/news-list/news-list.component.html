@@ -4,23 +4,20 @@
     <span class="example-spacer"></span>
     <mat-form-field appearance="outline">
       <mat-label>Country</mat-label>
-      <mat-select [(value)]="selectedCountry">
-        <mat-option>-- None --</mat-option>
-        <span *ngFor="let country of countries">
-          <mat-option value="country.code">{{ country.name }} </mat-option>
-        </span>
+      <mat-select [(ngModel)]="selectedCountry" (selectionChange)="filterNews()">
+        <mat-option value="">All</mat-option>
+        <mat-option *ngFor="let country of countries" [value]="country.code">
+          {{ country.name }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Enter a date range</mat-label>
-      <mat-date-range-input [rangePicker]="picker">
-        <input matStartDate placeholder="MM/DD/YYYY" />
-        <input matEndDate placeholder="MM/DD/YYYY" />
+      <mat-date-range-input [rangePicker]="picker" (dateChange)="filterNews()">
+        <input matStartDate placeholder="MM/DD/YYYY" [(ngModel)]="fromDate" />
+        <input matEndDate placeholder="MM/DD/YYYY" [(ngModel)]="toDate" />
       </mat-date-range-input>
-      <mat-datepicker-toggle
-        matIconSuffix
-        [for]="picker"
-      ></mat-datepicker-toggle>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
   </mat-toolbar>
@@ -29,7 +26,7 @@
     <mat-form-field class="example-full-width" appearance="outline">
       <mat-label>Search</mat-label>
       <mat-icon matPrefix>search</mat-icon>
-      <input type="search" matInput [(ngModel)]="searchQuery" (input)="filterNews()">
+      <input type="search" matInput [(ngModel)]="searchQuery" (ngModelChange)="filterNews()">
     </mat-form-field>
 
     <div *ngIf="filteredNewsList.length === 0">

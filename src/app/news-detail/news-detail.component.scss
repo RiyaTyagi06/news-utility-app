@@ -1,0 +1,24 @@
+.news-detail-card {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.news-detail-footer {
+  text-align: center;
+  padding: 10px 0;
+}
+mat-card {
+  mat-card-header {
+    display: unset;
+
+    mat-card-subtitle {
+      float: right;
+      color: darkslategrey;
+    }
+  }
+
+  mat-card-content {
+    padding: 5px 20px;
+  }
+}

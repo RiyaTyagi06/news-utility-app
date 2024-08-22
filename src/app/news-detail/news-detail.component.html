@@ -1,13 +1,28 @@
-<mat-card *ngIf="news">
+<mat-card *ngIf="news" class="news-detail-card">
   <mat-card-header>
     <mat-card-title>{{ news.title }}</mat-card-title>
-    <mat-card-subtitle>{{ news.author }}</mat-card-subtitle>
+    <mat-card-subtitle
+      >By {{ news.author }} |
+      {{ news.publishedAt | date : "MMMM d, y" }}</mat-card-subtitle
+    >
   </mat-card-header>
-  <img mat-card-image [src]="news.urlToImage" alt="News image" />
+
+  <img mat-card-image [src]="news.urlToImage" alt="news image" />
+
   <mat-card-content>
+    <p>{{ news.description }}</p>
     <p>{{ news.content }}</p>
   </mat-card-content>
+
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="goBack()">Back</button>
+    <a [href]="news.url" target="_blank" mat-button color="primary"
+      >Read full article</a
+    >
   </mat-card-actions>
 </mat-card>
+
+<div class="news-detail-footer">
+  <button mat-raised-button color="primary" (click)="goBack()">
+    Back to News List
+  </button>
+</div>

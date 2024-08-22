@@ -12,7 +12,7 @@ mat-toolbar {
 
   mat-form-field {
     padding-left: 5px;
-    height: 63px;
+    height: 50px;
     width: 200px;
 
     mat-select {
@@ -33,20 +33,34 @@ mat-toolbar {
   .mat-mdc-text-field-wrapper {
     height: 40px;
   }
+  .mat-mdc-floating-label {
+    top: 20px !important;
+  }
+  .mat-mdc-form-field-flex {
+    align-self: center;
+  }
+  .mdc-floating-label {
+    left: unset !important;
+  }
 }
 
 .news-list {
   padding: 30px;
   padding-top: 5rem;
 
+  mat-form-field {
+    width: 260px;
+  }
+
   &_cards {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    justify-content: space-between;
   }
 
   mat-card {
-    width: 250px;
+    width: 260px;
     height: 350px;
     padding: 5px;
     cursor: pointer;
@@ -77,6 +91,12 @@ mat-toolbar {
       text-overflow: ellipsis;
       font-size: 12px;
       line-height: 1.2em;
+    }
+
+    mat-card-actions {
+      min-height: unset;
+      padding: 0px 5px;
+      font-size: 12px;
     }
   }
 }
