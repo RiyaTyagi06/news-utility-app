@@ -8,6 +8,4 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  title = 'news-utility-app';
-}
+export class AppComponent {}

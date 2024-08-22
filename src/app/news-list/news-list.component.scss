@@ -47,6 +47,19 @@ mat-toolbar {
 .news-list {
   padding: 30px;
   padding-top: 5rem;
+  width: 100%;
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    mat-spinner {
+      height: 50px !important;
+      width: 50px !important;
+    }
+  }
 
   mat-form-field {
     width: 260px;

@@ -1,20 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+
+import { NewsItem } from '../models/news-item.model';
 
 @Component({
   selector: 'app-news-detail',
   standalone: true,
   imports: [CommonModule, MatCardModule, MatIconModule],
   templateUrl: './news-detail.component.html',
-  styleUrl: './news-detail.component.scss'
+  styleUrl: './news-detail.component.scss',
 })
 export class NewsDetailComponent implements OnInit {
-  public news: any;
+  public news: NewsItem[] = [];
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   public ngOnInit(): void {
     this.getNewsDetail();
