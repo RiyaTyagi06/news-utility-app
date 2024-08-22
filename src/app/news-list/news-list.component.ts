@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { NewsService } from '../service/news.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -32,9 +32,8 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './news-list.component.html',
   styleUrl: './news-list.component.scss',
   providers: [NewsService, provideNativeDateAdapter()],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewsListComponent {
+export class NewsListComponent  implements OnInit{
   public newsList: any[] = [];
   public filteredNewsList: any[] = [];
   public countries = [
@@ -58,8 +57,8 @@ export class NewsListComponent {
   }
 
   public async getNews(): Promise<void> {
-    try {
-      this.newsService.getNews().subscribe((data) => {
+    this.newsService.getNews().subscribe({
+      next: (data) => {
         this.filteredNewsList = this.newsList = data.articles.map((article: any, index: any) => {
           let country;
           if (index % 3 === 0) {
@@ -71,11 +70,11 @@ export class NewsListComponent {
           }
           return { ...article, country };
         });
-        console.log(this.newsList);
-      });     
-    } catch (error) {
-      console.error('Error fetching news:', error);
-    }
+      },
+      error: (err) => {
+        console.error('Error fetching news:', err);
+      },
+    });
   }
 
   public filterNews(): void {
