@@ -94,9 +94,9 @@ export class NewsListComponent implements OnInit {
   public filterNews(): void {
     this.filteredNewsList = this.newsList.filter((news) => {
       const matchesSearchQuery =
-        news?.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        news?.author.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        news?.description
+        news.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        news.author.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        news.description
           .toLowerCase()
           .includes(this.searchQuery.toLowerCase());
 
