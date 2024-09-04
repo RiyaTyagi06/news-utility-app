@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 
 import { NewsItem } from '../models/news-item.model';
+import { NewsService } from '../service/news.service';
 
 @Component({
   selector: 'app-news-detail',
@@ -17,7 +18,7 @@ import { NewsItem } from '../models/news-item.model';
 export class NewsDetailComponent implements OnInit {
   public news: NewsItem | undefined;
 
-  constructor(private router: Router) {}
+  constructor(private newsService: NewsService, private router: Router) {}
 
   public ngOnInit(): void {
     this.getNewsDetail();
@@ -28,10 +29,14 @@ export class NewsDetailComponent implements OnInit {
   }
 
   private getNewsDetail(): void {
-    if (history.state && history.state.data) {
-      this.news = history.state.data;
-    } else {
-      this.router.navigate(['/']);
+    const storedNews = localStorage.getItem('selectedNews');
+    if (storedNews) {
+      this.news = JSON.parse(storedNews);
     }
+    this.newsService.data$.subscribe(data => {
+      if (data) {
+        this.news = data;
+      }
+    });
   }
 }

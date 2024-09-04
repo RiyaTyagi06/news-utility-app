@@ -39,7 +39,7 @@ import { NewsService } from '../service/news.service';
   ],
   templateUrl: './news-list.component.html',
   styleUrl: './news-list.component.scss',
-  providers: [NewsService, provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter()],
 })
 export class NewsListComponent implements OnInit {
   public newsList: NewsItem[] = [];
@@ -62,7 +62,9 @@ export class NewsListComponent implements OnInit {
   }
 
   public openNewsDetail(news: NewsItem): void {
-    this.router.navigate(['/news-detail', news.url], { state: { data: news } });
+    this.newsService.setData(news);
+    localStorage.setItem('selectedNews', JSON.stringify(news));
+    this.router.navigate(['/news-detail', news.url]);
   }
 
   public async getNews(): Promise<void> {
